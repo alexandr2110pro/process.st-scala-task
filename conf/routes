@@ -1,0 +1,36 @@
+GET           /                             controllers.Application.index
+
+# API
+# ----------------------------------------
+
+# find todos
+# supports optional `active` filter query parameter.
+# I would implement filters as a `filter` query parameter
+#   like
+#   `GET /v1/todos?filter[active]=true&filter[text]=something`
+# but it requires query deserialization and I'm not quite confident how to do it right in Play. Yet...
+GET           /v1/todos                     controllers.Todos.findAll(active: Option[Boolean])
+
+# create the todo
+POST          /v1/todos                     controllers.Todos.add()
+
+# delete the todo
+DELETE        /v1/todos/:id                 controllers.Todos.remove(id: Long)
+
+# get todo by id
+GET           /v1/todos/:id                 controllers.Todos.find(id: Long)
+
+# update todo by id
+PUT           /v1/todos/:id                 controllers.Todos.update(id: Long)
+
+# add a comment for a todo
+POST          /v1/todos/:id/comments        controllers.Todos.addComment(id: Long)
+
+# get comments for a todo item
+GET           /v1/todos/:id/comments        controllers.Todos.findAllComments(id: Long)
+
+
+
+
+# Map static resources from the /public folder to the /assets URL path
+GET           /assets/*file                 controllers.Assets.at(path="/public", file)
